@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 名称空间: 当前mapper文件的唯一标识-->
+<mapper namespace="cn.itcast.mapper.UserMapper">
+    <!--1 根据用户编号查询用户信息
+       id : 设置sql语句的唯一标号
+       parameterType : 参数类型, 全路径
+       resultType : 结果类型, 全路径
+    -->
+    <select id="queryUserById" parameterType="long" resultType="user">
+        select * from tb_user where id=#{id}
+    </select>
+
+    <!--2 查询所有的用户信息-->
+    <select id="queryAll" resultType="user">
+        select *  from tb_user
+    </select>
+
+    <!--3 增加用户-->
+    <insert id="insertUser" parameterType="User">
+        insert into
+            tb_user(id, user_name, password, name, age, sex, birthday, created, updated)
+        values(null, #{userName}, #{password}, #{name}, #{age}, #{sex}, #{birthday}, now(), now())
+    </insert>
+
+    <!--4 修改用户-->
+    <update id="updateUser" parameterType="User">
+        update tb_user
+        set
+            user_name=#{userName},
+            password=#{password},
+            name=#{name},
+            age=#{age},
+            sex=#{sex},
+            birthday=#{birthday},
+            updated=now()
+        where id=#{id}
+    </update>
+
+    <!--5 根据编号 删除用户-->
+    <delete id="deleteById" parameterType="long">
+        delete from tb_user
+        where id=#{id}
+    </delete>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--2 关联jdbc.properties文件: 自动加载 resources/jdbc.properties文件-->
+    <properties resource="jdbc.properties"/>
+
+    <!--4 设置-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--5 设置别名-->
+    <typeAliases>
+        <!--5.1 给每一个类起别名: 缺点每个都需要注册起别名-->
+        <!--<typeAlias type="cn.itcast.domain.User" alias="User"/>-->
+
+        <!--
+            5.2 对包内的所有javabean起别名
+            <typeAlias type="cn.itcast.domain.User" alias="User"/>
+            <typeAlias type="cn.itcast.domain.Order" alias="Order"/>
+            <typeAlias type="cn.itcast.domain.Orderitem" alias="Orderitem"/>
+            <typeAlias type="cn.itcast.domain.Product" alias="Product"/>
+            ... ...
+        -->
+        <package name="cn.itcast.domain"/>
+    </typeAliases>
+
+    <!--1 配置环境-->
+    <environments default="test">
+        <!--1.1 开发环境使用的数据库-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+        <!--1.2 测试环境使用的数据库-->
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.test.driverClassName}"/>
+                <property name="url" value="${jdbc.test.url}"/>
+                <property name="username" value="${jdbc.test.username}"/>
+                <property name="password" value="${jdbc.test.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--3 映射保存sql语句的xml文件-->
+    <mappers>
+        <!--方式一: 读取resources目录下的文件-->
+        <!--<mapper resource="mapper/UserMapper.xml"/>-->
+
+        <!--方式二: 通过类路径读取配置mapper文件-->
+        <!--<mapper class="cn.itcast.mapper.UserMapper"/>-->
+
+        <!--方式三: 扫描报名-->
+        <package name="cn.itcast.mapper"/>
+    </mappers>
+</configuration>
